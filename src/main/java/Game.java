@@ -1,52 +1,59 @@
+import java.util.ArrayList;
+
 public class Game {
 
-    private Player[] items = new Player[0];
+    protected ArrayList<Player> players = new ArrayList<>();
 
-    public Player[] findByName(String name) {
+    public ArrayList<Player> getAllPlayers() {
+        return players;
+    }
+
+    public void register(Player player) {
+        players.add(player);
+    }
+
+    public ArrayList<Player> findByName(String playerName) {
         Game searchResult = new Game();
-        for (Player player : getItems()) {
-            if (player.getName().contains(name)) {
-                searchResult.save(player);
+        for (Player player : getAllPlayers()) {
+            if (player.getName().contains(playerName)) {
+                searchResult.register(player);
             }
         }
-        return searchResult.getItems();
+        return searchResult.getAllPlayers();
     }
 
-    public void save(Player item) {
-        Player[] tmp = new Player[items.length + 1];
-        for (int i = 0; i < items.length; i++) {
-            tmp[i] = items[i];
+    public int round(String playerName1, String playerName2) {
+        Player player1 = null;
+        Player player2 = null;
+        for (Player player : players) {
+            if (player.getName().equals(playerName1)) {
+                player1 = player;
+            }
+            if (player.getName().equals(playerName2)) {
+                player2 = player;
+            }
         }
-        tmp[tmp.length - 1] = item;
-        items = tmp;
-    }
-
-    public Player[] getItems() {
-        return items;
-    }
-
-    public Player[] showAllRegistered(Player player) {
-        if (player.isRegistered() == false) {
+        if (player1 == null) {
             throw new NotRegisteredException(
-                    "игрок " + player.getName() + " не зарегистрирован"
+                    "игрок " + playerName1 + " не зарегистрирован"
             );
+        }
+        if (player2 == null) {
+            throw new NotRegisteredException(
+                    "игрок " + playerName2 + " не зарегистрирован"
+            );
+        }
+        if (player1.getStrenght() > player2.getStrenght()) {
+            return 1;
+        }
+        if (player1.getStrenght() < player2.getStrenght()) {
+            return 2;
         } else {
-            return null;
+
         }
-    }
 
-    public int round(Player player1, Player player2) {
-        if (showAllRegistered(player1) == null | showAllRegistered(player2) == null) {
-
-            if (player1.getStrenght() > player2.getStrenght()) {
-                return 1;
-            }
-            if (player1.getStrenght() < player2.getStrenght()) {
-                return 2;
-            } else {
-
-            }
-        }
         return 0;
+
+
     }
 }

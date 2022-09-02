@@ -3,7 +3,6 @@ public class Player {
     int id;
     String name;
     int strenght;
-    boolean registered;
 
     public String getName() {
         return name;
@@ -13,14 +12,9 @@ public class Player {
         return strenght;
     }
 
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public Player(int id, String name, int strenght, boolean registered) {
+    public Player(int id, String name, int strenght) {
         this.id = id;
         this.name = name;
         this.strenght = strenght;
-        this.registered = registered;
     }
 }
